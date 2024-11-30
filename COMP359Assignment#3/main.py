@@ -2,29 +2,13 @@ import numpy as np
 import matplotlib.pyplot as plt
 
 def simplex(c, A, b):
-    """
-    Solves the linear programming problem:
-    Maximize: c^T x
-    Subject to: A x <= b, x >= 0
-    using the Simplex algorithm.
 
-    Parameters:
-    c (numpy.ndarray): Coefficients of the objective function.
-    A (numpy.ndarray): Coefficients of the inequality constraints.
-    b (numpy.ndarray): Right-hand side values of the constraints.
-
-    Returns:
-    tuple: Optimal solution vector and the maximum value of the objective function.
-    """
-    # Number of constraints (m) and variables (n)
     m, n = A.shape
 
-    # Construct the initial tableau
     tableau = np.hstack((A, np.eye(m), b.reshape(-1, 1)))
     c_extended = np.hstack((c, np.zeros(m + 1)))
     tableau = np.vstack((tableau, c_extended))
 
-    # Iterative pivoting
     while True:
         # Step 1: Identify the entering variable (most negative coefficient in the objective row)
         entering = np.argmin(tableau[-1, :-1])
@@ -58,13 +42,7 @@ def simplex(c, A, b):
     return solution, optimal_value
 
 def plot_feasible_region(A, b):
-    """
-    Plots the feasible region defined by the constraints A x <= b.
 
-    Parameters:
-    A (numpy.ndarray): Coefficients of the inequality constraints.
-    b (numpy.ndarray): Right-hand side values of the constraints.
-    """
     x_vals = np.linspace(0, 10, 400)
     plt.figure(figsize=(8, 6))
 
